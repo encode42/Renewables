@@ -11,8 +11,7 @@ This is my first attempt at modding. Though I have experience with the game's in
 ### ❔ F.A.Q.
 <details>
 <summary>
-
-**Will this support Fabric?**
+Will this support Fabric?
 </summary>
 
 I don't know. I'm not against this, however! If you're able to change the few lines required to support both Fabric and Quilt, please submit a pull request!
@@ -20,8 +19,7 @@ I don't know. I'm not against this, however! If you're able to change the few li
 
 <details>
 <summary>
-
-**Will this support Forge?**
+Will this support Forge?
 </summary>
 
 I don't know. Unlike Fabric support, I'm not too interested in this.
@@ -29,8 +27,7 @@ I don't know. Unlike Fabric support, I'm not too interested in this.
 
 <details>
 <summary>
-
-**Will this support Minecraft version X?**
+Will this support Minecraft version X?
 </summary>
 
 I don't know. This mod is very simple, so theoretically it shouldn't be hard to support many versions.
