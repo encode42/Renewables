@@ -1,0 +1,40 @@
+{
+    "type": "create:compacting",
+    "ingredients": [
+        {
+            "tag": "c:coal"
+        },
+        {
+            "tag": "c:coal"
+        },
+        {
+            "tag": "c:coal"
+        },
+        {
+            "tag": "c:coal"
+        },
+        {
+            "tag": "c:coal"
+        },
+        {
+            "tag": "c:coal"
+        },
+        {
+            "tag": "c:coal"
+        },
+        {
+            "tag": "c:coal"
+        },
+        {
+            "tag": "c:coal"
+        }
+    ],
+    "results": [
+        {
+            "item": "renewables:diamond_shard",
+            "count": 1,
+            "chance": 0.1
+        }
+    ],
+    "heatRequirement": "heated"
+}

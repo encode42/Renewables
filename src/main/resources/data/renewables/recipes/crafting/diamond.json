@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "group": "misc",
+    "key": {
+        "S": {
+            "item": "renewables:diamond_shard"
+        }
+    },
+    "pattern": [
+        "SSS",
+        "SSS",
+        "SSS"
+    ],
+    "result": {
+        "item": "minecraft:diamond"
+    },
+    "show_notification": true
+}
