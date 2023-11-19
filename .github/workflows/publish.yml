@@ -1,0 +1,77 @@
+name: Publish
+
+on:
+    workflow_dispatch:
+        inputs:
+            name:
+                description: "What to name the update"
+                type: string
+                required: true
+
+            releaseChannel:
+                description: "Which stability channel to release the mod through"
+                type: choice
+                options:
+                    - release
+                    - beta
+                    - alpha
+                default: "release"
+
+jobs:
+    run:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Set up Java
+          uses: actions/setup-java@v3
+          with:
+              distribution: temurin
+              java-version: 17
+
+        - name: Cache
+          uses: actions/cache@v3
+          with:
+              path: |
+                  ~/.gradle/caches
+                  ~/.gradle/loom-cache
+                  ~/.gradle/wrapper
+              key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle-wrapper.properties') }}
+              restore-keys: ${{ runner.os }}-gradle
+
+        - name: Drop snapshot label
+          id: version
+          run: |
+              sed -i 's/\(version = .*\)-SNAPSHOT\(\)/\1\2/' gradle.properties
+              echo "VERSION=$(cat gradle.properties | grep "version =" | sed 's/version = \(.*\)/\1/')" >> $GITHUB_OUTPUT
+
+        - name: Build
+          run: ./gradlew build
+
+        - name: Get commits since last tag
+          id: commits
+          uses: simbo/changes-since-last-release-action@v1
+          with:
+              line-prefix: "- "
+              include-hashes: false
+
+        - name: Publish
+          uses: Kir-Antipov/mc-publish@v3.3
+          with:
+              github-tag: ${{ steps.version.outputs.VERSION }}
+              github-token: ${{ secrets.GITHUB_TOKEN }}
+              github-prerelease: ${{ inputs.releaseChannel != 'release' }}
+
+              modrinth-id: sxQkrIHe
+              modrinth-token: ${{ secrets.MODRINTH_UPLOAD_TOKEN }}
+
+              name: ${{ inputs.name != '' && inputs.name || steps.version.outputs.VERSION }}
+              version: ${{ steps.version.outputs.VERSION }}
+              version-type: ${{ inputs.releaseChannel }}
+              loaders: quilt
+              game-versions: 1.20.1
+
+              changelog: ${{ steps.commits.outputs.log }}
+
+              fail-mode: warn
