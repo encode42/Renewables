@@ -6,7 +6,7 @@ on:
             name:
                 description: "What to name the update"
                 type: string
-                required: true
+                required: false
 
             releaseChannel:
                 description: "Which stability channel to release the mod through"
@@ -59,6 +59,8 @@ jobs:
         - name: Publish
           uses: Kir-Antipov/mc-publish@v3.3
           with:
+              files: build/libs/!(*-@(dev\|sources\|javadoc)).jar
+
               github-tag: ${{ steps.version.outputs.VERSION }}
               github-token: ${{ secrets.GITHUB_TOKEN }}
               github-prerelease: ${{ inputs.releaseChannel != 'release' }}
@@ -69,8 +71,6 @@ jobs:
               name: ${{ inputs.name != '' && inputs.name || steps.version.outputs.VERSION }}
               version: ${{ steps.version.outputs.VERSION }}
               version-type: ${{ inputs.releaseChannel }}
-              loaders: quilt
-              game-versions: 1.20.1
 
               changelog: ${{ steps.commits.outputs.log }}
 
